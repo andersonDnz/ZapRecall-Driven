@@ -9,7 +9,7 @@ export default function Flashcard({ index, pergunta }) {
   return (
     <FlashcardBox onClick={() => setAberto(true)}>
       {!aberto ? (
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <p>Pergunta {index + 1}</p>
           <IoPlayOutline size={20} />
         </div>
