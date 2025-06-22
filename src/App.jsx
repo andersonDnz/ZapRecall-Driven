@@ -1,27 +1,46 @@
-import Deck from "./components/Deck";
+import { useState } from "react";
+
+import deck from "./data/deck";
+
+import Flashcard from "./components/Flashcard";
 import Footer from "./components/Footer";
+
 import { Container, Logo } from "./components/styles";
 
 import zapLogo from "./assets/logo.png";
 
 
-import { useState } from "react";
-import deck from "./data/deck";
 
 
 
 export default function App() {
-  const [respondidos, setRespondidos] = useState(0);
+  const [respostas, setRespostas] = useState([]);
+
+  function registrarResposta(index, opcao) {
+    const novasRespostas = [...respostas];
+    novasRespostas[index] = opcao;
+    setRespostas(novasRespostas);
+  }
 
   return (
     <Container>
       <Logo>
         <img src={zapLogo} alt="Zap Recall" />
-
         <h1>ZapRecall</h1>
       </Logo>
-      <Deck />
-      <Footer respondidos={respondidos} total={deck.length} />
+
+      {deck.map((item, index) => (
+        <Flashcard
+          key={index}
+          index={index}
+          pergunta={item.pergunta}
+          resposta={item.resposta}
+          registrarResposta={registrarResposta}
+          status={respostas[index]}
+        />
+      ))}
+
+      <Footer respostas={respostas} total={deck.length} />
     </Container>
   );
 }
